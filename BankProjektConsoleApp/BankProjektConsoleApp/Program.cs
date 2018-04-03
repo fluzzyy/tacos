@@ -42,7 +42,7 @@ namespace BankProjektConsoleApp
                 //Adds new account to list
                 account.Add(new bankAccounts(newNumber, newName, newOwner, newBalance));
 
-                Console.WriteLine("Lägg till flera konton? J / N");
+                Console.WriteLine("Lägga till flera konton? J / N");
                 string answer = Console.ReadLine();
                 if (answer == "n")
                 {
