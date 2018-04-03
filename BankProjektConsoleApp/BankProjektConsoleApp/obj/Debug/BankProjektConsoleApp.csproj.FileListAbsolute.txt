@@ -1,0 +1,7 @@
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\bin\Debug\BankProjektConsoleApp.exe.config
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\bin\Debug\BankProjektConsoleApp.exe
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\bin\Debug\BankProjektConsoleApp.pdb
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\obj\Debug\BankProjektConsoleApp.csprojResolveAssemblyReference.cache
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\obj\Debug\BankProjektConsoleApp.csproj.CoreCompileInputs.cache
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\obj\Debug\BankProjektConsoleApp.exe
+C:\Visual Studio project\BankProjektConsoleApp\BankProjektConsoleApp\obj\Debug\BankProjektConsoleApp.pdb
