@@ -45,6 +45,8 @@
     <Compile Include="bankAccounts.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transfer.cs" />
+    <Compile Include="TransferManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
