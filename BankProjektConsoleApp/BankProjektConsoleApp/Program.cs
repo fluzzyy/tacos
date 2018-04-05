@@ -15,12 +15,22 @@ namespace BankProjektConsoleApp
        private static  List<bankAccounts> account = new List<bankAccounts>();
         static void Main(string[] args)
         {
-            
+            string filepath = @"c:\Visual Studio Project\BankProjektConsoleApp\BankAccounts.txt";
+            List<string> lines = File.ReadAllLines(filepath).ToList();
+
+            foreach (string line in lines)
+            {
+                string[] words = line.Split(' ');
+
+                var konton=new bankAccounts(words[0],words[1], words[2], double.Parse(words[3]));
+                account.Add(konton);
+
+            }
             // default account       
             //account.Add(new bankAccounts(45678, "Nisse Ströms sparkonto", "Nisse Ström", 45600));
             //account.Add(new bankAccounts(67896, "Olles konto", "Ola Karlsson", 67000));
             //account.Add(new bankAccounts(123456, "Alex's konto", "Alex Gunnarsson", 97000));
-            //listToFile();
+            
             var menulopp = true;
             while (menulopp)
             {             
@@ -133,10 +143,10 @@ namespace BankProjektConsoleApp
             System.Text.StringBuilder theBuilder = new System.Text.StringBuilder();
             for(int i = 0; i < account.Count; i++)
             {
-                theBuilder.Append(account[i].number);
-                theBuilder.Append(account[i].name);
-                theBuilder.Append(account[i].owner);
-                theBuilder.Append(account[i].balance);
+                theBuilder.Append(account[i].number +" ");
+                theBuilder.Append(account[i].name +" ");
+                theBuilder.Append(account[i].owner +" ");
+                theBuilder.Append(account[i].balance + Environment.NewLine);
             }
             using (var sw = new StreamWriter(@"c:\Visual Studio Project\BankProjektConsoleApp\BankAccounts.txt", true))          
             {
@@ -148,6 +158,7 @@ namespace BankProjektConsoleApp
 
         private static void WireTransfer()
         {
+            Console.Clear();
             Console.Write("Från ");           
             var fromAccount = findAccount();
             Console.Write("Till ");
