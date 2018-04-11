@@ -175,7 +175,7 @@ namespace BankProjektConsoleApp
         }
         private static void cancelAccount()
         {
-            Console.Write("Ange konto att ta bort: ");
+            //Console.Write("Ange konto att ta bort: ");
             var remove = findAccount();
             account.RemoveAt(remove);
             string content = "";
