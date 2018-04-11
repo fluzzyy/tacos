@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BankProjektConsoleApp
 {
-    public class bankAccounts
+    public class BankAccount
     {
         public string number { get; set; }
         public string name { get; set; }
         public string owner { get; set; }
         public double balance { get; set; }
 
-        public bankAccounts(string number, string name, string owner, double balance)
+        public BankAccount(string number, string name, string owner, double balance)
         {
             this.number = number;
             this.name = name;
@@ -45,6 +45,11 @@ namespace BankProjektConsoleApp
 
                 Console.WriteLine("Uttag medjes!");
             }
+        }
+
+        public String toString()
+        {
+            return number + " " + name + " " + owner + " " + balance;
         }
     }
 }

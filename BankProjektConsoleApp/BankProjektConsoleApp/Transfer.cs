@@ -9,11 +9,11 @@ namespace BankProjektConsoleApp
 {
    public class Transfer
    {
-       private bankAccounts to;
-       private bankAccounts from;
+       private BankAccount to;
+       private BankAccount from;
        private double Amount;
 
-       public Transfer(bankAccounts to, bankAccounts from, double Amount)
+       public Transfer(BankAccount to, BankAccount from, double Amount)
        {
            this.to = to;
            this.from= from;

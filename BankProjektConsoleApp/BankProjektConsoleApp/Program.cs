@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Contexts;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace BankProjektConsoleApp
 {
     class Program
     {
-
-       private static  List<bankAccounts> account = new List<bankAccounts>();
-        static void Main(string[] args)
+       private static  List<BankAccount> account = new List<BankAccount>();
+       public static void Main(string[] args)
         {
-            string filepath = @"c:\Visual Studio Project\BankProjektConsoleApp\BankAccounts.txt";
+            string filepath = @"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt";
             List<string> lines = File.ReadAllLines(filepath).ToList();
 
             foreach (string line in lines)
             {
                 string[] words = line.Split(' ');
 
-                var konton=new bankAccounts(words[0],words[1], words[2], double.Parse(words[3]));
+                var konton=new BankAccount(words[0],words[1], words[2], double.Parse(words[3]));
                 account.Add(konton);
 
             }
@@ -40,6 +41,9 @@ namespace BankProjektConsoleApp
                 Console.WriteLine("[3] uttag ");
                 Console.WriteLine("[4] Lista över konton");
                 Console.WriteLine("[5] Överföring");
+                Console.WriteLine("[6] Avsluta konto");
+                Console.WriteLine("[7] Datumbetalning");
+                Console.WriteLine("[8] Visa valv");
                 var choice = Console.ReadLine();
                 switch (choice)
                 {
@@ -47,9 +51,10 @@ namespace BankProjektConsoleApp
                     case "2": Deposit(); break;
                     case "3": Withdraw();break;
                     case "4": accountList();break;
-                    case "5":
-                        WireTransfer(); break;
-                        
+                    case "5": WireTransfer(); break;                      
+                    case "6": cancelAccount();break;
+                    case "7": DateTransfer();break;
+                    case "8": Vault();break;    
                 }
             }         
         }
@@ -69,7 +74,7 @@ namespace BankProjektConsoleApp
 
                 //Adds new account to list
                
-                account.Add(new bankAccounts(newNumber, newName, newOwner, newBalance));
+                account.Add(new BankAccount(newNumber, newName, newOwner, newBalance));
                 
                 Console.WriteLine("Lägga till flera konton? J / N");
                 var answer = Console.ReadLine();
@@ -82,8 +87,7 @@ namespace BankProjektConsoleApp
             }
         }
         private static int findAccount()
-        {
-           
+        {          
             Console.Write("Ange kontonummer: ");
             var searchaccount = Console.ReadLine();
             
@@ -94,8 +98,7 @@ namespace BankProjektConsoleApp
                     return i;                 
                 }            
             }
-            return -1;
-            
+            return -1;           
         }
         public static void Deposit()
         {
@@ -148,14 +151,11 @@ namespace BankProjektConsoleApp
                 theBuilder.Append(account[i].owner +" ");
                 theBuilder.Append(account[i].balance + Environment.NewLine);
             }
-            using (var sw = new StreamWriter(@"c:\Visual Studio Project\BankProjektConsoleApp\BankAccounts.txt", true))          
+            using (var sw = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt", true))          
             {
                 sw.Write(theBuilder.ToString());
             }
-
-            //Console.ReadLine();
         }
-
         private static void WireTransfer()
         {
             Console.Clear();
@@ -170,12 +170,59 @@ namespace BankProjektConsoleApp
             Console.WriteLine();
             Transfer t = new Transfer(account[toAccount] , account[fromAccount], amountInput);
             t.Commit();
-            Console.WriteLine("Från kontonummer: "+account[fromAccount].number + " Saldo kvar: " + account[fromAccount].balance);
-            Console.WriteLine("TIll konto: "+account[toAccount].number + " Saldo kvar: "+ account[toAccount].balance);
-            
-
-             
+            Console.WriteLine("Från kontonummer: "+account[fromAccount].number + " Nytt Saldo: " + account[fromAccount].balance);
+            Console.WriteLine("TIll konto: "+account[toAccount].number + " Nytt Saldo: "+ account[toAccount].balance);                        
         }
-         
+        private static void cancelAccount()
+        {
+            Console.Write("Ange konto att ta bort: ");
+            var remove = findAccount();
+            account.RemoveAt(remove);
+            string content = "";
+            foreach (var a in account)
+            {
+                content += a.toString() + Environment.NewLine;
+
+            }
+            File.WriteAllText(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt", content);
+            Console.WriteLine("Konto avslutat!");
+            Console.ReadLine();
+        }
+        private static void DateTransfer()
+        {
+            DateTime datum=new DateTime(2018,04,11);           
+            Console.Clear();
+            Console.Write("Från: ");
+            var fromAccountDate = findAccount();
+            Console.Write("Till: ");
+            var toAccountDate = findAccount();
+            Console.Write("När(YYYY/MM/DD):  ");
+            var inputDate = Console.ReadLine();
+            DateTime datumet = DateTime.ParseExact(inputDate, "yyyy-MM-dd",
+                System.Globalization.CultureInfo.InvariantCulture); //ingen aning vad detta är
+            DateTime DateNow = DateTime.Now;
+
+            Console.Write("Summa: ");
+            var amountTransfer = Convert.ToDouble(Console.ReadLine());
+            if (datumet.Date>DateNow.Date)
+            {
+                Console.WriteLine("Överföring kommer slutföras den: "+datumet);
+            }
+            else
+            {
+                Transfer transfer = new Transfer(account[fromAccountDate],account[toAccountDate],amountTransfer);
+                transfer.Commit();
+            }
+        }
+        private static void Vault()
+        {
+            Console.Clear();
+            double total = 0;
+            foreach (var konto in account)
+            {
+                total += konto.balance;            
+            }
+            Console.WriteLine("Total summa i valvet: " + total);
+        }
     }
 }
