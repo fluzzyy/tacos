@@ -44,6 +44,7 @@ namespace BankProjektConsoleApp
                 Console.WriteLine("[6] Avsluta konto");
                 Console.WriteLine("[7] Datumbetalning");
                 Console.WriteLine("[8] Visa valv");
+                Console.WriteLine("[9] Ta bort datumbetalning");
                 var choice = Console.ReadLine();
                 switch (choice)
                 {
@@ -54,7 +55,8 @@ namespace BankProjektConsoleApp
                     case "5": WireTransfer(); break;                      
                     case "6": cancelAccount();break;
                     case "7": DateTransfer();break;
-                    case "8": Vault();break;    
+                    case "8": Vault();break;
+                    case "9": removeDateTransfer();break;
                 }
             }         
         }
@@ -151,7 +153,7 @@ namespace BankProjektConsoleApp
                 theBuilder.Append(account[i].owner +" ");
                 theBuilder.Append(account[i].balance + Environment.NewLine);
             }
-            using (var sw = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt", true))          
+            using (var sw = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt", false))          
             {
                 sw.Write(theBuilder.ToString());
             }
@@ -206,13 +208,16 @@ namespace BankProjektConsoleApp
             var amountTransfer = Convert.ToDouble(Console.ReadLine());
             if (datumet.Date>DateNow.Date)
             {
+
                 Console.WriteLine("Överföring kommer slutföras den: "+datumet);
+                dateTransferToFile(fromAccountDate,toAccountDate,inputDate,amountTransfer);
             }
             else
             {
                 Transfer transfer = new Transfer(account[fromAccountDate],account[toAccountDate],amountTransfer);
                 transfer.Commit();
             }
+
         }
         private static void Vault()
         {
@@ -223,6 +228,44 @@ namespace BankProjektConsoleApp
                 total += konto.balance;            
             }
             Console.WriteLine("Total summa i valvet: " + total);
+        }
+
+        private static void dateTransferToFile(int fromAccountDate, int toAccountDate,string inputDate, double amountTransfer)
+        {
+            Console.Clear();
+            System.Text.StringBuilder theDateBuilder = new System.Text.StringBuilder();
+           
+                theDateBuilder.Append(fromAccountDate + " ");
+                theDateBuilder.Append(toAccountDate + " ");
+                theDateBuilder.Append(inputDate+ " ");
+                theDateBuilder.Append(amountTransfer + Environment.NewLine);
+            using (var sw2 = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransfer.txt", true))
+            {
+                sw2.Write(theDateBuilder.ToString());
+            }
+        }
+
+        private static void removeDateTransfer()
+        {
+            Console.Clear();
+            Console.Write("Ange konto för att ta bort dess datumbetalning: ");
+            var removeInput = Console.ReadLine();
+            string numberline = "";
+            using (StreamReader reader =
+                new StreamReader(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransfer.txt"))
+            {
+                using (StreamWriter writer = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransferDelete.txt"))
+                {
+                    while ((numberline = reader.ReadLine()) != null)
+                    {
+                       if(string.Compare(numberline,removeInput)==0)
+                           continue;
+                        writer.WriteLine(numberline);
+                    }
+                }
+            }
+           
+
         }
     }
 }
