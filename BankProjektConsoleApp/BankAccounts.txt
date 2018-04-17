@@ -1,2 +1,1 @@
-123 apanspar apa 45600
-1 apa nisse 900
+﻿123 apa pajas 12345

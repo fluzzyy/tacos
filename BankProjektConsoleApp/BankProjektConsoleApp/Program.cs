@@ -24,8 +24,7 @@ namespace BankProjektConsoleApp
                 string[] words = line.Split(' ');
 
                 var konton=new BankAccount(words[0],words[1], words[2], double.Parse(words[3]));
-                account.Add(konton);
-
+                account.Add(konton);              
             }
             // default account       
             //account.Add(new bankAccounts(45678, "Nisse Ströms sparkonto", "Nisse Ström", 45600));
@@ -135,10 +134,10 @@ namespace BankProjektConsoleApp
             Console.WriteLine("--------Alla konton-----------");
             foreach(var s in account)
             {
-                Console.WriteLine(s.number);
-                Console.WriteLine(s.name);            
-                Console.WriteLine(s.owner);
-                Console.WriteLine(s.balance);
+                Console.WriteLine("Kontonummer: "+s.number);
+                Console.WriteLine("Kontonamn: "+s.name);            
+                Console.WriteLine("Kontoägare: "+s.owner);
+                Console.WriteLine("Saldo: "+s.balance);
                 Console.WriteLine();
             }
         }
@@ -244,7 +243,6 @@ namespace BankProjektConsoleApp
                 sw2.Write(theDateBuilder.ToString());
             }
         }
-
         private static void removeDateTransfer()
         {
             Console.Clear();
