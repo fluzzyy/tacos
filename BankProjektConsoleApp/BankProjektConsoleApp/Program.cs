@@ -131,7 +131,7 @@ namespace BankProjektConsoleApp
         public static void accountList()
         {
             Console.Clear();
-            Console.WriteLine("--------Alla konton-----------");
+            Console.WriteLine("----------Alla konton-----------");
             foreach(var s in account)
             {
                 Console.WriteLine("Kontonummer: "+s.number);
@@ -191,7 +191,7 @@ namespace BankProjektConsoleApp
         }
         private static void DateTransfer()
         {
-            DateTime datum=new DateTime(2018,04,11);           
+            DateTime datum=new DateTime(2018,04,17);           
             Console.Clear();
             Console.Write("Från: ");
             var fromAccountDate = findAccount();
