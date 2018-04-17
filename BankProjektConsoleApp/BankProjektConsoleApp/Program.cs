@@ -207,7 +207,6 @@ namespace BankProjektConsoleApp
             var amountTransfer = Convert.ToDouble(Console.ReadLine());
             if (datumet.Date>DateNow.Date)
             {
-
                 Console.WriteLine("Överföring kommer slutföras den: "+datumet);
                 dateTransferToFile(fromAccountDate,toAccountDate,inputDate,amountTransfer);
             }
@@ -216,7 +215,6 @@ namespace BankProjektConsoleApp
                 Transfer transfer = new Transfer(account[fromAccountDate],account[toAccountDate],amountTransfer);
                 transfer.Commit();
             }
-
         }
         private static void Vault()
         {
@@ -245,7 +243,7 @@ namespace BankProjektConsoleApp
         }
         private static void removeDateTransfer()
         {
-            Console.Clear();
+            Console.Clear();          
             Console.Write("Ange konto för att ta bort dess datumbetalning: ");
             var removeInput = Console.ReadLine();
             string numberline = "";
