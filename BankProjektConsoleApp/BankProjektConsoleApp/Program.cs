@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Contexts;
@@ -264,7 +265,9 @@ namespace BankProjektConsoleApp
             {
                 File.Delete(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransfer.txt");
             }
-            File.Move(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransferDelete.txt", @"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransfer.txt");         
+            File.Move(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransferDelete.txt", @"c:\Visual Studio Project\tacos\BankProjektConsoleApp\DateTransfer.txt");    
+                       
         }
+        
     }
 }
