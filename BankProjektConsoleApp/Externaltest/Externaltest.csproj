@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExternalText.cs" />
+    <Compile Include="Externaltransfer.cs" />
+    <Compile Include="Filemaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

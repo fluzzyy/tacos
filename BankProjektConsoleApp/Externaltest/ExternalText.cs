@@ -12,15 +12,19 @@ using BankProjektConsoleApp;
 using S22.Imap;
 
 
+
+
 namespace Externaltest
 {
-    class ExternalText
+    public class ExternalText
     {
        private static List<BankAccount> account = new List<BankAccount>();
         static void Main(string[] args)
         {
+            Filemaster.getFileModification(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt","4321","300");
            sendMail();
-            readMail();
+            readMail();   
+            
 
             string filepath = @"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt";
             List<string> lines = File.ReadAllLines(filepath).ToList();
@@ -34,30 +38,39 @@ namespace Externaltest
             }
             ExternalTransfer a = new ExternalTransfer(account[0],account[1],100);
             a.commit();
-            listToFile();
+            //listToFile();
         }
-        private static void listToFile()
-        {
-            Console.Clear();
-            System.Text.StringBuilder theBuilder = new System.Text.StringBuilder();
-            for (int i = 0; i < account.Count; i++)
-            {
-                theBuilder.Append(account[i].number + " ");
-                theBuilder.Append(account[i].name + " ");
-                theBuilder.Append(account[i].owner + " ");
-                theBuilder.Append(account[i].balance + Environment.NewLine);
-            }
-            using (var sw = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt", false))
-            {
-                sw.Write(theBuilder.ToString());
-            }
-        }
+        //private static void listToFile()
+        //{
+        //    Console.Clear();
+        //    System.Text.StringBuilder theBuilder = new System.Text.StringBuilder();
+        //    for (int i = 0; i < account.Count; i++)
+        //    {
+        //        theBuilder.Append(account[i].number + " ");
+        //        theBuilder.Append(account[i].name + " ");
+        //        theBuilder.Append(account[i].owner + " ");
+        //        theBuilder.Append(account[i].balance + Environment.NewLine);
+        //    }
+        //    using (var sw = new StreamWriter(@"c:\Visual Studio Project\tacos\BankProjektConsoleApp\BankAccounts.txt", false))
+        //    {
+        //        sw.Write(theBuilder.ToString());
+        //    }
+        //}
         private static void sendMail()
-        {
-            Console.Write("Från konto: ");
-
+        {           
             
-            MailMessage sendMail=new MailMessage("tacobanken@gmail.com", "tryggbank@gmail.com");
+            Console.Write("Från kontonummer: ");
+            var fromAccountNumber = Console.ReadLine();
+            Console.Write("Ange bankmail: ");
+            var toBankMail = Console.ReadLine();
+            Console.Write("Ange externt kontonummer: ");
+            var toAccountNumber = Console.ReadLine();
+            Console.Write("Summa: ");
+            var externalSum = Console.ReadLine();
+            Program.findAccount(account, fromAccountNumber);
+            BankAccount externalFrom = account[Program.findAccount(account, fromAccountNumber)];
+
+            MailMessage sendMail=new MailMessage("tacobanken@gmail.com", toBankMail);
             SmtpClient client = new SmtpClient(); 
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;

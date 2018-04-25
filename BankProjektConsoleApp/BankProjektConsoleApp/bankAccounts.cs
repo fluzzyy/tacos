@@ -33,17 +33,19 @@ namespace BankProjektConsoleApp
                 this.balance = this.balance + amount;
             }
         }
-        public void withdraw(double amount)
+        public bool withdraw(double amount)
         {
             if (amount > balance)
             {
                 Console.WriteLine("uttag medjes ej!");
+                return false;
             }
             else
             {
                 this.balance = this.balance - amount;
 
                 Console.WriteLine("Uttag medjes!");
+                return true;
             }
         }
 

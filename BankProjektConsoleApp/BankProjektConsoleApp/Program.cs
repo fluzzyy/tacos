@@ -10,9 +10,10 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
+
 namespace BankProjektConsoleApp
 {
-    class Program
+   public class Program
     {
        private static  List<BankAccount> account = new List<BankAccount>();
        public static void Main(string[] args)
@@ -88,14 +89,14 @@ namespace BankProjektConsoleApp
                 listToFile();
             }
         }
-        private static int findAccount()
+        public static int findAccount(List<BankAccount> accountList,string find)
         {          
-            Console.Write("Ange kontonummer: ");
-            var searchaccount = Console.ReadLine();
+            //Console.Write("Ange kontonummer: ");
+            //var searchaccount = Console.ReadLine();
             
             for (var i = 0; i < account.Count; i++)
             {
-                if (account[i].number == searchaccount)
+                if (accountList[i].number == find)
                 {
                     return i;                 
                 }            
@@ -105,7 +106,9 @@ namespace BankProjektConsoleApp
         public static void Deposit()
         {
             Console.Clear();
-            var find = findAccount();
+            Console.Write("Ange kontonummer: ");
+            var searchaccount = Console.ReadLine();
+            var find = findAccount(account,searchaccount );
             Console.WriteLine("Kontonummer: " + account[find].number);
             Console.WriteLine("Kontonamn: "+ account[find].name);
             Console.WriteLine("Kontoägare: " + account[find].owner);
@@ -114,12 +117,15 @@ namespace BankProjektConsoleApp
             double Depositinput = Convert.ToDouble(Console.ReadLine());
             account[find].deposit(Depositinput);
             Console.WriteLine("Nytt saldo: " + account[find].balance);
-            Console.WriteLine();           
+            Console.WriteLine();   
+                        
         }
         public static void Withdraw()
         {
             Console.Clear();
-            var find = findAccount();
+            Console.Write("Ange kontonummer: ");
+            var searchaccount = Console.ReadLine();
+            var find = findAccount(account,searchaccount);
             Console.WriteLine("Kontonummer: " + account[find].number);
             Console.WriteLine("Kontonamn: "+ account[find].name);
             Console.WriteLine("Kontoägare: " + account[find].owner);
@@ -161,10 +167,12 @@ namespace BankProjektConsoleApp
         private static void WireTransfer()
         {
             Console.Clear();
-            Console.Write("Från ");           
-            var fromAccount = findAccount();
-            Console.Write("Till ");
-            var toAccount = findAccount();
+            Console.Write("Från konto: ");
+            var fromAccountInput = Console.ReadLine();
+            var fromAccount = findAccount(account,fromAccountInput);
+            Console.Write("Till Konto ");
+            var toAccountInput = Console.ReadLine();
+            var toAccount = findAccount(account,toAccountInput);
             Console.Write("Summa: ");
             var amountInput =Convert.ToDouble( Console.ReadLine());
             
@@ -177,8 +185,9 @@ namespace BankProjektConsoleApp
         }
         private static void cancelAccount()
         {
-            //Console.Write("Ange konto att ta bort: ");
-            var remove = findAccount();
+            Console.Write("Ange konto att ta bort: ");
+            var removeAccountInput = Console.ReadLine();
+            var remove = findAccount(account,removeAccountInput);
             account.RemoveAt(remove);
             string content = "";
             foreach (var a in account)
@@ -194,10 +203,12 @@ namespace BankProjektConsoleApp
         {
             DateTime datum=new DateTime(2018,04,17);           
             Console.Clear();
-            Console.Write("Från: ");
-            var fromAccountDate = findAccount();
-            Console.Write("Till: ");
-            var toAccountDate = findAccount();
+            Console.Write("Från konto: ");
+            var fromAccountInputDate = Console.ReadLine();
+            var fromAccountDate = findAccount(account,fromAccountInputDate);
+            Console.Write("Till Konto: ");
+            var toAccountInputDate = Console.ReadLine();
+            var toAccountDate = findAccount(account,toAccountInputDate);
             Console.Write("När(YYYY/MM/DD):  ");
             var inputDate = Console.ReadLine();
             DateTime datumet = DateTime.ParseExact(inputDate, "yyyy-MM-dd",
